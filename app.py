@@ -1,13 +1,17 @@
+import streamlit as st
 import pandas as pd
 import pandas_datareader.data as web
 from pandas_datareader.yahoo.headers import DEFAULT_HEADERS
-import matplotlib.pyplot as plt
-import seaborn as sns
 import datetime as dt
 import requests_cache
 import yfinance as yf
 
 yf.pdr_override()
+st.set_page_config(page_title='Stream Finance', layout="wide", initial_sidebar_state="auto")
+
+
+st.title('Stream Finance')
+
 
 
 expire_after = dt.timedelta(days=3)
@@ -20,5 +24,3 @@ dolar = web.get_data_yahoo('USDBRL=X', start=start_date, end=end_date)
 btc = web.get_data_yahoo('BTC-USD', start=start_date, end=end_date)
 
 #print(dolar.head(10))
-
-
