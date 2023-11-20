@@ -27,8 +27,24 @@ with st.container():
 
 
 df = web.get_data_yahoo(ativo, start=data_inicial, end=data_final)
+df.index = df.index.date
 #dolar = web.get_data_yahoo('USDBRL=X', start=start_date, end=end_date)
 #btc = web.get_data_yahoo('BTC-USD', start=start_date, end=end_date)
 
+ultima_atualizacao = df.index.max()
+primeira_cotacao = round(df.loc[df.index.min(), 'Adj Close'], 2)
+ultima_cotacao = round(df.loc[df.index.max(), 'Adj Close'], 2)
+menor_cotacao = round(df['Adj Close'].min(), 2)
+maior_cotacao = round(df['Adj Close'].max(), 2)
+variacao_cotacao = round(((ultima_cotacao - primeira_cotacao) / primeira_cotacao) * 100, 2)
+
 with st.container():
-    st.dataframe(df.head(14), 1000, 500)
+    with coluna1:
+        st.metric('Última cotação', f'R${ultima_cotacao:.2f}', f'{variacao_cotacao}%')
+    with coluna2:
+        st.metric('Menor cotação do período', f'R${menor_cotacao}')
+    with coluna3:
+        st.metric('Maior cotação do período', f'R${maior_cotacao}')
+
+with st.container():
+    st.dataframe(df, 1000, 500)
