@@ -15,7 +15,7 @@ start_date = dt.datetime(end_date.year-1, end_date.month, end_date.day)
 
 with st.container():
 
-    coluna1, coluna2, coluna3 =st.columns(3)
+    coluna1, coluna2, coluna3 = st.columns(3)
 
     with coluna1:
         ativo = st.selectbox('Selecione o ativo:', options=['PETR4.SA', 'GOAU4.SA', 'MGLU3.SA', 'HAPV3.SA', 'RAIZ4.SA', 'VALE3.SA', 'CSNA3.SA', 'BBDC4.SA', 'CIEL3.SA', 'GGBR4.SA'])
@@ -39,6 +39,7 @@ maior_cotacao = round(df['Adj Close'].max(), 2)
 variacao_cotacao = round(((ultima_cotacao - primeira_cotacao) / primeira_cotacao) * 100, 2)
 
 with st.container():
+
     with coluna1:
         st.metric('Última cotação', f'R${ultima_cotacao:.2f}', f'{variacao_cotacao}%')
     with coluna2:
@@ -47,4 +48,13 @@ with st.container():
         st.metric('Maior cotação do período', f'R${maior_cotacao}')
 
 with st.container():
-    st.dataframe(df, 1000, 500)
+
+    coluna4, coluna5 = st.columns(2)
+
+    with coluna4:
+        st.dataframe(df, 1000, 330)
+    with coluna5:
+        st.area_chart(df[['Adj Close']])
+
+with st.container():
+    st.line_chart(df[['High', 'Low']])
