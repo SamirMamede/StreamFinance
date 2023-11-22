@@ -8,7 +8,7 @@ yf.pdr_override()
 st.set_page_config(page_title='Stream Finance', layout="wide", initial_sidebar_state="auto")
 
 
-st.title('Stream Finance')
+st.title('Stream Finance 📊')
 
 end_date = dt.datetime.today()
 start_date = dt.datetime(end_date.year-1, end_date.month, end_date.day)
@@ -57,4 +57,10 @@ with st.container():
         st.area_chart(df[['Adj Close']])
 
 with st.container():
-    st.line_chart(df[['High', 'Low']])
+    st.subheader(f'Volume de negociações do ativo {ativo}')
+    st.line_chart(df[['Volume']])
+
+with st.container():
+    st.subheader('FIIs')
+    options_fiis = st.multiselect('Escolha os FIIs para comparar', ['VGIA11', 'VINO11', 'GALG11', 'GSFI11', 'VGHF11', 'MXRF11',
+                                                                  'KNCA11', 'BBPO11', 'GGRC11', 'MALL11', 'XPML11', 'BCFF11', 'KNRI11'])
